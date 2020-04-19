@@ -1,17 +1,12 @@
 # gulp-reinstall
 
-> Automatically install npm, bower, tsd, typings, composer and pip packages/dependencies if the relative configurations are found in the gulp file stream.
+Automatically install npm, bower, tsd, typings, composer and pip packages/dependencies if the relative configurations are found in the gulp file stream.
 
 <!-- TOC depthfrom:2 updateonsave:false -->
 
 - [Primary objective](#primary-objective)
 - [Installation](#installation)
-  - [For global use with slush](#for-global-use-with-slush)
-  - [For local use with gulp](#for-local-use-with-gulp)
 - [Usage](#usage)
-  - [In your `gulpfile.js`](#in-your-gulpfilejs)
-- [API](#api)
-  - [`inject([options] [, callback])`](#injectoptions--callback)
 - [Options](#options)
   - [options.`<command>`](#optionscommand)
   - [options.commands](#optionscommands)
@@ -33,25 +28,15 @@
 | `composer.json`    | `composer install`                |
 | `requirements.txt` | `pip install -r requirements.txt` |
 
-It will run the command in the directory it finds the file, so if you have configs nested in a lower directory than your `slushfile.js`/`gulpfile.js`, this will still work.
+It will run the command in the directory it finds the file, so if you have configs nested in a lower directory than your `gulpfile.js`, this will still work.
 
-**NOTE** gulp-reinstall requires at least NodeJS v6.
+**NOTE** gulp-reinstall requires at least NodeJS version 8.3.
 
 ## Primary objective
 
-Used as the install step when using [`slush`](https://www.npmjs.org/package/slush) as a Yeoman replacement.
+Used for installing NPM packages as part of a Gulp build. This package is inspired by (and parts are based on) [gulp-install](https://github.com/slushjs/gulp-install). The original plugin appears no longer maintained, and needed to be updated to remove some warnings from `npm audit`. This rewrite also reduces the number of package dependencies to avoid similar problems in future.
 
 ## Installation
-
-### For global use with slush
-
-Install `gulp-reinstall` as a dependency:
-
-```shell
-npm install --save gulp-reinstall
-```
-
-### For local use with gulp
 
 Install `gulp-reinstall` as a development dependency:
 
@@ -61,26 +46,13 @@ npm install --save-dev gulp-reinstall
 
 ## Usage
 
-### In your `gulpfile.js`
-
 ```javascript
-var install = require('gulp-reinstall');
+var reinstall = require('gulp-reinstall');
 
-gulp.src(['./bower.json', './package.json']).pipe(install());
+gulp.src(['./bower.json', './package.json']).pipe(reinstall());
 ```
 
-## API
-
-### `inject([options] [, callback])`
-
-| Param    | Type       | Description                                       |
-| -------- | ---------- | ------------------------------------------------- |
-| options  | `Object`   | Any [option](#options)                            |
-| callback | `Function` | Called when install is finished (not on failures) |
-
 ## Options
-
-To not trigger the install use `--skip-install` as CLI parameter when running `slush` or `gulp`.
 
 ### options.`<command>`
 
@@ -91,13 +63,13 @@ To not trigger the install use `--skip-install` as CLI parameter when running `s
 Use this option(s) to specify any arguments for any command, e.g:
 
 ```javascript
-var install = require('gulp-reinstall');
+var reinstall = require('gulp-reinstall');
 
 gulp
   .src(__dirname + '/templates/**')
   .pipe(gulp.dest('./'))
   .pipe(
-    install({
+    reinstall({
       npm: '--production', // Either a single argument as a string
       bower: { allowRoot: true }, // Or arguments as an object (transformed using Dargs: https://www.npmjs.com/package/dargs)
       pip: ['--target', '.'] // Or arguments as an array
@@ -114,13 +86,13 @@ gulp
 Use this option to add any command to be run for any file, e.g:
 
 ```javascript
-var install = require('gulp-reinstall');
+var reinstall = require('gulp-reinstall');
 
 gulp
   .src(__dirname + '/templates/**')
   .pipe(gulp.dest('./'))
   .pipe(
-    install({
+    reinstall({
       commands: {
         'package.json': 'yarn'
       },
@@ -135,17 +107,17 @@ gulp
 
 **Default:** `false`
 
-Set to `true` if `npm install` should be appended with the `--production` parameter when stream contains `package.json`.
+Set to `true` if invocations of `npm install` and `bower install` should be appended with the `--production` parameter.
 
 **Example:**
 
 ```javascript
-var install = require('gulp-reinstall');
+var reinstall = require('gulp-reinstall');
 
 gulp
   .src(__dirname + '/templates/**')
   .pipe(gulp.dest('./'))
-  .pipe(install({ production: true }));
+  .pipe(reinstall({ production: true }));
 ```
 
 ### options.ignoreScripts
@@ -154,17 +126,17 @@ gulp
 
 **Default:** `false`
 
-Set to `true` if `npm install` should be appended with the `--ignore-scripts` parameter when stream contains `package.json`. Useful for skipping `postinstall` scripts with `npm`.
+Set to `true` if invocations of `npm install` should be appended with the `--ignore-scripts` parameter. Useful for skipping `postinstall` scripts with `npm`.
 
 **Example:**
 
 ```javascript
-var install = require('gulp-reinstall');
+var reinstall = require('gulp-reinstall');
 
 gulp
   .src(__dirname + '/templates/**')
   .pipe(gulp.dest('./'))
-  .pipe(install({ ignoreScripts: true }));
+  .pipe(reinstall({ ignoreScripts: true }));
 ```
 
 ### options.noOptional
@@ -178,12 +150,12 @@ Set to `true` if `npm install` should be appended with the `--no-optional` param
 **Example:**
 
 ```javascript
-var install = require('gulp-reinstall');
+var reinstall = require('gulp-reinstall');
 
 gulp
   .src(__dirname + '/templates/**')
   .pipe(gulp.dest('./'))
-  .pipe(install({ noOptional: true }));
+  .pipe(reinstall({ noOptional: true }));
 ```
 
 ### options.allowRoot
@@ -192,17 +164,17 @@ gulp
 
 **Default:** `false`
 
-Set to `true` if `bower install` should be appended with the `--allow-root` parameter when stream contains `bower.json`.
+Set to `true` if invocations of `bower install` should be appended with the `--allow-root` parameter.
 
 **Example:**
 
 ```javascript
-var install = require('gulp-reinstall');
+var reinstall = require('gulp-reinstall');
 
 gulp
   .src(__dirname + '/templates/**')
   .pipe(gulp.dest('./'))
-  .pipe(install({ allowRoot: true }));
+  .pipe(reinstall({ allowRoot: true }));
 ```
 
 ### options.args
@@ -216,13 +188,13 @@ Specify additional arguments that will be passed to the install command(s).
 **Example:**
 
 ```javascript
-var install = require('gulp-reinstall');
+var reinstall = require('gulp-reinstall');
 
 gulp
   .src(__dirname + '/templates/**')
   .pipe(gulp.dest('./'))
   .pipe(
-    install(
+    reinstall(
       {
         args: ['dev', '--no-shrinkwrap']
       } // npm install --dev --no-shrinkwrap
@@ -232,4 +204,4 @@ gulp
 
 ## License
 
-[MIT License](http://en.wikipedia.org/wiki/MIT_License)
+Licensed under the [MIT License](./LICENSE).
