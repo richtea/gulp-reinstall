@@ -21,6 +21,12 @@ A Gulp plugin to automatically install npm, bower, tsd, typings, composer and pi
 
 <!-- /TOC -->
 
+## Overview
+
+`gulp-reinstall` is a Gulp plugin that runs commands based on the files found in a vinyl stream. The filename determines the command that is run.
+
+The default settings are:
+
 | File Found         | Command run                       |
 | ------------------ | --------------------------------- |
 | `package.json`     | `npm install`                     |
@@ -32,11 +38,15 @@ A Gulp plugin to automatically install npm, bower, tsd, typings, composer and pi
 
 It will run the command in the directory it finds the file, so if you have configs nested in a lower directory than your `gulpfile.js`, this will still work.
 
-**NOTE** gulp-reinstall requires at least NodeJS version 8.3.
+**NOTE** `gulp-reinstall` requires at least NodeJS 8.3.
 
 ## Primary objective
 
-Used for installing NPM packages as part of a Gulp build. This plugin is inspired by (and parts are based on) [gulp-install](https://github.com/slushjs/gulp-install). The original plugin appears to be no longer maintained, and needed to be updated to remove some `npm audit` warnings. This rewrite also reduces the number of package dependencies to avoid similar problems in future.
+Used for installing NPM packages as part of a Gulp build.
+
+This plugin is inspired by [gulp-install](https://github.com/slushjs/gulp-install), and significant parts of the source code owe a debt to that plugin, although the main plugin logic is largely rewritten.
+
+The `gulp-install` plugin appears to be no longer maintained, and was dependent on the now deprecated `gulp-util` package. This replacement plugin removes that dependency, and also reduces the number of package dependencies to avoid `npm audit` problems in future.
 
 ## Installation
 
@@ -58,7 +68,7 @@ gulp.src(['./bower.json', './package.json']).pipe(reinstall());
 
 ### options.`<command>`
 
-**Type:** `Array|String|Object`
+**Type:** `Array | String | Object`
 
 **Default:** `null`
 
@@ -72,9 +82,9 @@ gulp
   .pipe(gulp.dest('./'))
   .pipe(
     reinstall({
-      npm: '--production', // Either a single argument as a string
+      npm: '--production',        // Either a single argument as a string
       bower: { allowRoot: true }, // Or arguments as an object (transformed using Dargs: https://www.npmjs.com/package/dargs)
-      pip: ['--target', '.'] // Or arguments as an array
+      pip: ['--target', '.']      // Or arguments as an array
     })
   );
 ```
@@ -147,7 +157,7 @@ gulp
 
 **Default:** `false`
 
-Set to `true` if `npm install` should be appended with the `--no-optional` parameter which will prevent optional dependencies from being installed.
+Set to `true` if invocations of `npm install` should be appended with the `--no-optional` parameter, which will prevent optional dependencies from being installed.
 
 **Example:**
 
@@ -181,7 +191,7 @@ gulp
 
 ### options.args
 
-**Type:** `Array or String`
+**Type:** `Array | String`
 
 **Default:** `undefined`
 
