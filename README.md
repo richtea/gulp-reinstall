@@ -1,6 +1,6 @@
-# gulp-reinstall [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][depstat-image]][depstat-url]
+# gulp-reinstall
 
-> Automatically install npm, bower, tsd, typings, composer and pip packages/dependencies if the relative configurations are found in the gulp file stream respectively
+> Automatically install npm, bower, tsd, typings, composer and pip packages/dependencies if the relative configurations are found in the gulp file stream.
 
 <!-- TOC depthfrom:2 updateonsave:false -->
 
