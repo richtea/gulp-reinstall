@@ -1,0 +1,40 @@
+{
+  "name": "gulp-reinstall",
+  "version": "0.0.1",
+  "description": "Automatically install npm packages based on a Gulp file stream",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "gulp",
+    "install",
+    "npm",
+    "gulpplugin"
+  ],
+  "author": "richtea",
+  "license": "MIT",
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-config-prettier": "^6.9.0",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-mocha": "^6.3.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "eslint-plugin-react": "^7.18.3",
+    "eslint-plugin-react-hooks": "^1.7.0",
+    "gulp": "^4.0.2",
+    "mocha": "^7.1.1",
+    "prettier": "1.19.1",
+    "vinyl": "^2.2.0"
+  },
+  "dependencies": {
+    "dargs": "^7.0.0",
+    "fancy-log": "^1.3.3",
+    "gulplog": "^1.0.0",
+    "p-queue": "^6.2.1",
+    "plugin-error": "^1.0.1"
+  }
+}

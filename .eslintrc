@@ -5,7 +5,16 @@
 
   "env": {
     "node": true,
-    "es6": true
+    "es6": true,
+    "mocha": true
   },
-  "extends": ["airbnb", "plugin:prettier/recommended"]
+  "extends": ["airbnb", "plugin:prettier/recommended", "plugin:mocha/recommended"],
+  "overrides": [
+    {
+      "files": ["*.spec.js"],
+      "rules": {
+        "func-names": "off"
+      }
+    }
+  ]
 }
