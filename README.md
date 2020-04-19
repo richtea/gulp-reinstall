@@ -46,7 +46,7 @@ Used for installing NPM packages as part of a Gulp build.
 
 This plugin is inspired by [gulp-install](https://github.com/slushjs/gulp-install), and significant parts of the source code owe a debt to that plugin, although the main plugin logic is largely rewritten.
 
-The `gulp-install` plugin appears to be no longer maintained, and was dependent on the now deprecated `gulp-util` package. This replacement plugin removes that dependency, and also reduces the number of package dependencies to avoid `npm audit` problems in future.
+The `gulp-install` plugin appears to be no longer maintained, and is dependent on the now deprecated `gulp-util` package. This replacement plugin removes that dependency, and also reduces the number of package dependencies to avoid `npm audit` problems in future.
 
 ## Installation
 
