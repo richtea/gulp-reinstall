@@ -17,11 +17,12 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        node: [ '10', '8' ]
-    name: Node ${{ matrix.node }}
+        os: ['windows-latest', 'ubuntu-latest', 'macos-latest']
+        node: [ '12', '10', '8' ]
+    name: 'Node ${{ matrix.node }} / platform ${{ matrix.os }}'
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1

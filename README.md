@@ -1,7 +1,8 @@
 # gulp-reinstall
+
 ![CI build](https://github.com/richtea/gulp-reinstall/workflows/CI%20build/badge.svg)
 
-Automatically install npm, bower, tsd, typings, composer and pip packages/dependencies if the relative configurations are found in the gulp file stream.
+A Gulp plugin to automatically install npm, bower, tsd, typings, composer and pip packages/dependencies.
 
 <!-- TOC depthfrom:2 updateonsave:false -->
 
@@ -35,7 +36,7 @@ It will run the command in the directory it finds the file, so if you have confi
 
 ## Primary objective
 
-Used for installing NPM packages as part of a Gulp build. This package is inspired by (and parts are based on) [gulp-install](https://github.com/slushjs/gulp-install). The original plugin appears no longer maintained, and needed to be updated to remove some warnings from `npm audit`. This rewrite also reduces the number of package dependencies to avoid similar problems in future.
+Used for installing NPM packages as part of a Gulp build. This plugin is inspired by (and parts are based on) [gulp-install](https://github.com/slushjs/gulp-install). The original plugin appears to be no longer maintained, and needed to be updated to remove some `npm audit` warnings. This rewrite also reduces the number of package dependencies to avoid similar problems in future.
 
 ## Installation
 
