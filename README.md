@@ -1,4 +1,5 @@
 # gulp-reinstall
+![CI build](https://github.com/richtea/gulp-reinstall/workflows/CI%20build/badge.svg)
 
 Automatically install npm, bower, tsd, typings, composer and pip packages/dependencies if the relative configurations are found in the gulp file stream.
 
