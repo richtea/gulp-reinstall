@@ -20,9 +20,9 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: ['windows-latest', 'ubuntu-latest', 'macos-latest']
         node: [ '12', '10', '8' ]
-    name: 'Node ${{ matrix.node }} (${{ matrix.os }})ß'
+        os: ['windows-latest', 'ubuntu-latest', 'macos-latest']
+    name: 'Node ${{ matrix.node }} (${{ matrix.os }})'
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
