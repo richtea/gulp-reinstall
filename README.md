@@ -1,6 +1,7 @@
 # gulp-reinstall
 
 ![CI build](https://github.com/richtea/gulp-reinstall/workflows/CI%20build/badge.svg)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/richtea/gulp-reinstall/blob/master/LICENSE)
 
 A Gulp plugin to automatically install npm, bower, tsd, typings, composer and pip packages/dependencies.
 
