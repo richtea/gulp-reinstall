@@ -1,0 +1,20 @@
+{
+  "git": {
+    "commitMessage": "chore: release v${version}",
+    "requireBranch": ["master"],
+    "requireCommits": true
+  },
+  "github": {
+    "release": true,
+    "draft": true,
+    "tokenRef": "RELEASEMGMT_GITHUB_API_TOKEN"
+  },
+  "npm": {
+    "publish": false
+  },
+  "plugins": {
+    "@release-it/keep-a-changelog": {
+      "filename": "CHANGELOG.md"
+    }
+  }
+}
