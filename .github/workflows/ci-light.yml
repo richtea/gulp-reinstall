@@ -1,0 +1,28 @@
+# This workflow runs lightweight unit tests
+
+name: CI (light)
+
+on:
+  # Trigger the workflow on push to development branches
+  push:
+    branches:
+      - feature/*
+      - bugfix/*
+      - hotfix/*
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node:
+          - 12
+          - 8
+    name: 'Node ${{ matrix.node }} (ubuntu-latest)'
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+      - run: npm ci
+      - run: npm test

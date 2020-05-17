@@ -15,7 +15,7 @@ const installCommands = {
   npm: ['install'],
   pip: ['install', '-r', 'requirements.txt'],
   composer: ['install'],
-  typings: ['install']
+  typings: ['install'],
 };
 
 const defaultFileToCommand = {
@@ -24,14 +24,14 @@ const defaultFileToCommand = {
   'package.json': 'npm',
   'requirements.txt': 'pip',
   'composer.json': 'composer',
-  'typings.json': 'typings'
+  'typings.json': 'typings',
 };
 
 const noop = () => {};
 
 function transfob(transform, flush) {
   const t2 = new Transform({
-    objectMode: true
+    objectMode: true,
   });
   // eslint-disable-next-line no-underscore-dangle
   t2._transform = transform;
@@ -57,7 +57,7 @@ function gulpReinstall(opts = {}, done = noop) {
     if (installCmd) {
       const cmd = {
         cmd: installCmd,
-        args: (installCommands[installCmd] || []).slice()
+        args: (installCommands[installCmd] || []).slice(),
       };
       if (['bower', 'npm'].includes(cmd.cmd) && opts.production) {
         cmd.args.push('--production');
@@ -66,10 +66,10 @@ function gulpReinstall(opts = {}, done = noop) {
         cmd.args.push('--ignore-scripts');
       }
       if (opts.args) {
-        cmd.args = cmd.args.concat(opts.args).map(arg => arg.toString());
+        cmd.args = cmd.args.concat(opts.args).map((arg) => arg.toString());
       }
       if (Array.isArray(opts[cmd.cmd])) {
-        cmd.args = cmd.args.concat(opts[cmd.cmd].map(arg => arg.toString()));
+        cmd.args = cmd.args.concat(opts[cmd.cmd].map((arg) => arg.toString()));
       } else if (typeof opts[cmd.cmd] === 'object') {
         cmd.args = cmd.args.concat(dargs(opts[cmd.cmd]));
       } else if (opts[cmd.cmd]) {
@@ -115,7 +115,7 @@ function gulpReinstall(opts = {}, done = noop) {
       logger.warn('File %s is not supported', file);
       return cb(null, file);
     },
-    async cb => {
+    async (cb) => {
       await queue.onIdle();
       done();
       cb();
