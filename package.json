@@ -1,7 +1,7 @@
 {
   "name": "gulp-reinstall",
   "version": "0.1.0",
-  "description": "Automatically install npm, bower, tsd, and pip packages based on a Gulp file stream",
+  "description": "A Gulp plugin to install npm, bower, tsd, and pip packages, based on the configuration files found in the gulp file stream",
   "main": "index.js",
   "scripts": {
     "test": "npx mocha -R spec",
