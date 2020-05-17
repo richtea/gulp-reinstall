@@ -2,7 +2,7 @@ const path = require('path');
 const chai = require('chai');
 const Vinyl = require('vinyl');
 const commandRunner = require('../lib/command-runner');
-const reinstall = require('../.');
+const reinstall = require('..');
 
 const should = chai.should();
 
@@ -12,12 +12,12 @@ function fixture(file) {
     path: filepath,
     cwd: __dirname,
     base: path.join(__dirname, path.dirname(file)),
-    contents: null
+    contents: null,
   });
 }
 
 function mockRunner() {
-  const mock = cmd => {
+  const mock = (cmd) => {
     mock.called += 1;
     mock.commands.push(cmd);
     return Promise.resolve();
@@ -29,22 +29,22 @@ function mockRunner() {
 
 let originalRun;
 
-describe('gulp-install', function() {
-  beforeEach(function() {
+describe('gulp-install', function () {
+  beforeEach(function () {
     originalRun = commandRunner.run;
     commandRunner.run = mockRunner();
   });
 
-  afterEach(function() {
+  afterEach(function () {
     commandRunner.run = originalRun;
   });
 
-  it('should run `npm install` if stream contains `package.json`', function(done) {
+  it('should run `npm install` if stream contains `package.json`', function (done) {
     const file = fixture('package.json');
 
     const stream = reinstall();
 
-    stream.on('error', err => {
+    stream.on('error', (err) => {
       should.exist(err);
       done(err);
     });
@@ -63,12 +63,12 @@ describe('gulp-install', function() {
     stream.end();
   });
 
-  it('should run `npm install --production` if stream contains `package.json` and `production` option is set', function(done) {
+  it('should run `npm install --production` if stream contains `package.json` and `production` option is set', function (done) {
     const file = fixture('package.json');
 
     const stream = reinstall({ production: true });
 
-    stream.on('error', err => {
+    stream.on('error', (err) => {
       should.exist(err);
       done(err);
     });
@@ -80,7 +80,7 @@ describe('gulp-install', function() {
       commandRunner.run.commands[0].cmd.should.equal('npm');
       commandRunner.run.commands[0].args.should.eql([
         'install',
-        '--production'
+        '--production',
       ]);
       done();
     });
@@ -90,12 +90,12 @@ describe('gulp-install', function() {
     stream.end();
   });
 
-  it('should run `npm install --ignore-scripts` if stream contains `package.json` and `ignoreScripts` option is set', function(done) {
+  it('should run `npm install --ignore-scripts` if stream contains `package.json` and `ignoreScripts` option is set', function (done) {
     const file = fixture('package.json');
 
     const stream = reinstall({ ignoreScripts: true });
 
-    stream.on('error', err => {
+    stream.on('error', (err) => {
       should.exist(err);
       done(err);
     });
@@ -107,7 +107,7 @@ describe('gulp-install', function() {
       commandRunner.run.commands[0].cmd.should.equal('npm');
       commandRunner.run.commands[0].args.should.eql([
         'install',
-        '--ignore-scripts'
+        '--ignore-scripts',
       ]);
       done();
     });
@@ -117,39 +117,12 @@ describe('gulp-install', function() {
     stream.end();
   });
 
-  it('should run `bower install --config.interactive=false` if stream contains `bower.json`', function(done) {
+  it('should run `bower install --config.interactive=false` if stream contains `bower.json`', function (done) {
     const file = fixture('bower.json');
 
     const stream = reinstall();
 
-    stream.on('error', err => {
-      should.exist(err);
-      done(err);
-    });
-
-    stream.on('data', () => {});
-
-    stream.on('end', () => {
-      commandRunner.run.called.should.equal(1);
-      commandRunner.run.commands[0].cmd.should.equal('bower');
-      commandRunner.run.commands[0].args.should.eql([
-        'install',
-        '--config.interactive=false'
-      ]);
-      done();
-    });
-
-    stream.write(file);
-
-    stream.end();
-  });
-
-  it('should run `bower install --production --config.interactive=false` if stream contains `bower.json`', function(done) {
-    const file = fixture('bower.json');
-
-    const stream = reinstall({ production: true });
-
-    stream.on('error', err => {
+    stream.on('error', (err) => {
       should.exist(err);
       done(err);
     });
@@ -162,7 +135,6 @@ describe('gulp-install', function() {
       commandRunner.run.commands[0].args.should.eql([
         'install',
         '--config.interactive=false',
-        '--production'
       ]);
       done();
     });
@@ -172,12 +144,40 @@ describe('gulp-install', function() {
     stream.end();
   });
 
-  it('should run both `npm install` and `bower install --config.interactive=false` if stream contains both `package.json` and `bower.json`', function(done) {
+  it('should run `bower install --production --config.interactive=false` if stream contains `bower.json`', function (done) {
+    const file = fixture('bower.json');
+
+    const stream = reinstall({ production: true });
+
+    stream.on('error', (err) => {
+      should.exist(err);
+      done(err);
+    });
+
+    stream.on('data', () => {});
+
+    stream.on('end', () => {
+      commandRunner.run.called.should.equal(1);
+      commandRunner.run.commands[0].cmd.should.equal('bower');
+      commandRunner.run.commands[0].args.should.eql([
+        'install',
+        '--config.interactive=false',
+        '--production',
+      ]);
+      done();
+    });
+
+    stream.write(file);
+
+    stream.end();
+  });
+
+  it('should run both `npm install` and `bower install --config.interactive=false` if stream contains both `package.json` and `bower.json`', function (done) {
     const files = [fixture('package.json'), fixture('bower.json')];
 
     const stream = reinstall();
 
-    stream.on('error', err => {
+    stream.on('error', (err) => {
       should.exist(err);
       done(err);
     });
@@ -191,22 +191,22 @@ describe('gulp-install', function() {
       commandRunner.run.commands[1].cmd.should.equal('bower');
       commandRunner.run.commands[1].args.should.eql([
         'install',
-        '--config.interactive=false'
+        '--config.interactive=false',
       ]);
       done();
     });
 
-    files.forEach(file => stream.write(file));
+    files.forEach((file) => stream.write(file));
 
     stream.end();
   });
 
-  it('should run both `npm install --production` and `bower install --production --config.interactive=false` if stream contains both `package.json` and `bower.json`', function(done) {
+  it('should run both `npm install --production` and `bower install --production --config.interactive=false` if stream contains both `package.json` and `bower.json`', function (done) {
     const files = [fixture('package.json'), fixture('bower.json')];
 
     const stream = reinstall({ production: true });
 
-    stream.on('error', err => {
+    stream.on('error', (err) => {
       should.exist(err);
       done(err);
     });
@@ -218,31 +218,31 @@ describe('gulp-install', function() {
       commandRunner.run.commands[0].cmd.should.equal('npm');
       commandRunner.run.commands[0].args.should.eql([
         'install',
-        '--production'
+        '--production',
       ]);
       commandRunner.run.commands[1].cmd.should.equal('bower');
       commandRunner.run.commands[1].args.should.eql([
         'install',
         '--config.interactive=false',
-        '--production'
+        '--production',
       ]);
       done();
     });
 
-    files.forEach(file => stream.write(file));
+    files.forEach((file) => stream.write(file));
 
     stream.end();
   });
 
-  it('should be able to specify different args for different commands', function(done) {
+  it('should be able to specify different args for different commands', function (done) {
     const files = [fixture('package.json'), fixture('bower.json')];
 
     const stream = reinstall({
       bower: ['--allow-root'],
-      npm: ['--silent']
+      npm: ['--silent'],
     });
 
-    stream.on('error', err => {
+    stream.on('error', (err) => {
       should.exist(err);
       done(err);
     });
@@ -257,25 +257,25 @@ describe('gulp-install', function() {
       commandRunner.run.commands[1].args.should.eql([
         'install',
         '--config.interactive=false',
-        '--allow-root'
+        '--allow-root',
       ]);
       done();
     });
 
-    files.forEach(file => stream.write(file));
+    files.forEach((file) => stream.write(file));
 
     stream.end();
   });
 
-  it('should be able to specify different args using objects for different commands', function(done) {
+  it('should be able to specify different args using objects for different commands', function (done) {
     const files = [fixture('package.json'), fixture('bower.json')];
 
     const stream = reinstall({
       bower: { allowRoot: true, silent: true },
-      npm: { registry: 'https://my.own-registry.com' }
+      npm: { registry: 'https://my.own-registry.com' },
     });
 
-    stream.on('error', err => {
+    stream.on('error', (err) => {
       should.exist(err);
       done(err);
     });
@@ -287,32 +287,32 @@ describe('gulp-install', function() {
       commandRunner.run.commands[0].cmd.should.equal('npm');
       commandRunner.run.commands[0].args.should.eql([
         'install',
-        '--registry=https://my.own-registry.com'
+        '--registry=https://my.own-registry.com',
       ]);
       commandRunner.run.commands[1].cmd.should.equal('bower');
       commandRunner.run.commands[1].args.should.eql([
         'install',
         '--config.interactive=false',
         '--allow-root',
-        '--silent'
+        '--silent',
       ]);
       done();
     });
 
-    files.forEach(file => stream.write(file));
+    files.forEach((file) => stream.write(file));
 
     stream.end();
   });
 
-  it('should be able to specify a different single argument using a string for different commands', function(done) {
+  it('should be able to specify a different single argument using a string for different commands', function (done) {
     const files = [fixture('package.json'), fixture('bower.json')];
 
     const stream = reinstall({
       bower: '--silent',
-      npm: '--registry=https://my.own-registry.com'
+      npm: '--registry=https://my.own-registry.com',
     });
 
-    stream.on('error', err => {
+    stream.on('error', (err) => {
       should.exist(err);
       done(err);
     });
@@ -324,27 +324,27 @@ describe('gulp-install', function() {
       commandRunner.run.commands[0].cmd.should.equal('npm');
       commandRunner.run.commands[0].args.should.eql([
         'install',
-        '--registry=https://my.own-registry.com'
+        '--registry=https://my.own-registry.com',
       ]);
       commandRunner.run.commands[1].cmd.should.equal('bower');
       commandRunner.run.commands[1].args.should.eql([
         'install',
         '--config.interactive=false',
-        '--silent'
+        '--silent',
       ]);
       done();
     });
 
-    files.forEach(file => stream.write(file));
+    files.forEach((file) => stream.write(file));
 
     stream.end();
   });
 
-  it('should be able to any command for any file', function(done) {
+  it('should be able to any command for any file', function (done) {
     const files = [
       fixture('package.json'),
       fixture('config.js'),
-      fixture('blaha.yml')
+      fixture('blaha.yml'),
     ];
 
     const stream = reinstall({
@@ -353,11 +353,11 @@ describe('gulp-install', function() {
       commands: {
         'package.json': 'yarn',
         'config.js': 'jspm',
-        'blaha.yml': 'blaha'
-      }
+        'blaha.yml': 'blaha',
+      },
     });
 
-    stream.on('error', err => {
+    stream.on('error', (err) => {
       should.exist(err);
       done(err);
     });
@@ -375,17 +375,17 @@ describe('gulp-install', function() {
       done();
     });
 
-    files.forEach(file => stream.write(file));
+    files.forEach((file) => stream.write(file));
 
     stream.end();
   });
 
-  it('should run `bower install --allow-root --config.interactive=false` if stream contains `bower.json`', function(done) {
+  it('should run `bower install --allow-root --config.interactive=false` if stream contains `bower.json`', function (done) {
     const files = [fixture('bower.json')];
 
     const stream = reinstall({ allowRoot: true });
 
-    stream.on('error', err => {
+    stream.on('error', (err) => {
       should.exist(err);
       done(err);
     });
@@ -398,22 +398,22 @@ describe('gulp-install', function() {
       commandRunner.run.commands[0].args.should.eql([
         'install',
         '--config.interactive=false',
-        '--allow-root'
+        '--allow-root',
       ]);
       done();
     });
 
-    files.forEach(file => stream.write(file));
+    files.forEach((file) => stream.write(file));
 
     stream.end();
   });
 
-  it('should run `tsd reinstall --save` if stream contains `tsd.json`', function(done) {
+  it('should run `tsd reinstall --save` if stream contains `tsd.json`', function (done) {
     const file = fixture('tsd.json');
 
     const stream = reinstall();
 
-    stream.on('error', err => {
+    stream.on('error', (err) => {
       should.exist(err);
       done(err);
     });
@@ -432,12 +432,12 @@ describe('gulp-install', function() {
     stream.end();
   });
 
-  it('should run `pip install -r requirements.txt` if stream contains `requirements.txt`', function(done) {
+  it('should run `pip install -r requirements.txt` if stream contains `requirements.txt`', function (done) {
     const file = fixture('requirements.txt');
 
     const stream = reinstall();
 
-    stream.on('error', err => {
+    stream.on('error', (err) => {
       should.exist(err);
       done(err);
     });
@@ -450,7 +450,7 @@ describe('gulp-install', function() {
       commandRunner.run.commands[0].args.should.eql([
         'install',
         '-r',
-        'requirements.txt'
+        'requirements.txt',
       ]);
       done();
     });
@@ -460,12 +460,12 @@ describe('gulp-install', function() {
     stream.end();
   });
 
-  it('should run `npm install --no-optional` if `noOptional` option is set', function(done) {
+  it('should run `npm install --no-optional` if `noOptional` option is set', function (done) {
     const files = [fixture('package.json')];
 
     const stream = reinstall({ noOptional: true });
 
-    stream.on('error', err => {
+    stream.on('error', (err) => {
       should.exist(err);
       done(err);
     });
@@ -477,24 +477,24 @@ describe('gulp-install', function() {
       commandRunner.run.commands[0].cmd.should.equal('npm');
       commandRunner.run.commands[0].args.should.eql([
         'install',
-        '--no-optional'
+        '--no-optional',
       ]);
       done();
     });
 
-    files.forEach(file => stream.write(file));
+    files.forEach((file) => stream.write(file));
 
     stream.end();
   });
 
-  it('should run `npm install --dev --no-shrinkwrap` if args option is the appropriate array', function(done) {
+  it('should run `npm install --dev --no-shrinkwrap` if args option is the appropriate array', function (done) {
     const files = [fixture('package.json')];
 
     const stream = reinstall({
-      args: ['--dev', '--no-shrinkwrap']
+      args: ['--dev', '--no-shrinkwrap'],
     });
 
-    stream.on('error', err => {
+    stream.on('error', (err) => {
       should.exist(err);
       done(err);
     });
@@ -507,24 +507,24 @@ describe('gulp-install', function() {
       commandRunner.run.commands[0].args.should.eql([
         'install',
         '--dev',
-        '--no-shrinkwrap'
+        '--no-shrinkwrap',
       ]);
       done();
     });
 
-    files.forEach(file => stream.write(file));
+    files.forEach((file) => stream.write(file));
 
     stream.end();
   });
 
-  it("should run `npm install --dev` if args option is '--dev'", function(done) {
+  it("should run `npm install --dev` if args option is '--dev'", function (done) {
     const files = [fixture('package.json')];
 
     const stream = reinstall({
-      args: '--dev'
+      args: '--dev',
     });
 
-    stream.on('error', err => {
+    stream.on('error', (err) => {
       should.exist(err);
       done(err);
     });
@@ -538,19 +538,19 @@ describe('gulp-install', function() {
       done();
     });
 
-    files.forEach(file => stream.write(file));
+    files.forEach((file) => stream.write(file));
 
     stream.end();
   });
 
-  it('should run `npm install` even if args option is in an invalid format', function(done) {
+  it('should run `npm install` even if args option is in an invalid format', function (done) {
     const files = [fixture('package.json')];
 
     const stream = reinstall({
-      args: 42
+      args: 42,
     });
 
-    stream.on('error', err => {
+    stream.on('error', (err) => {
       should.exist(err);
       done(err);
     });
@@ -564,17 +564,17 @@ describe('gulp-install', function() {
       done();
     });
 
-    files.forEach(file => stream.write(file));
+    files.forEach((file) => stream.write(file));
 
     stream.end();
   });
 
-  it('should set `cwd` correctly to be able to run the same command in multiple folders', function(done) {
+  it('should set `cwd` correctly to be able to run the same command in multiple folders', function (done) {
     const files = [fixture('dir1/package.json'), fixture('dir2/package.json')];
 
     const stream = reinstall();
 
-    stream.on('error', err => {
+    stream.on('error', (err) => {
       should.exist(err);
       done(err);
     });
@@ -596,12 +596,12 @@ describe('gulp-install', function() {
       done();
     });
 
-    files.forEach(file => stream.write(file));
+    files.forEach((file) => stream.write(file));
 
     stream.end();
   });
 
-  it('should call given callback when done', function(done) {
+  it('should call given callback when done', function (done) {
     const files = [fixture('package.json')];
 
     const stream = reinstall(() => {
@@ -611,19 +611,19 @@ describe('gulp-install', function() {
       done();
     });
 
-    stream.on('error', err => {
+    stream.on('error', (err) => {
       should.exist(err);
       done(err);
     });
 
     stream.on('data', () => {});
 
-    files.forEach(file => stream.write(file));
+    files.forEach((file) => stream.write(file));
 
     stream.end();
   });
 
-  it('should allow both options and a callback', function(done) {
+  it('should allow both options and a callback', function (done) {
     const files = [fixture('package.json')];
 
     const stream = reinstall({ commands: { 'package.json': 'yarn' } }, () => {
@@ -633,14 +633,14 @@ describe('gulp-install', function() {
       done();
     });
 
-    stream.on('error', err => {
+    stream.on('error', (err) => {
       should.exist(err);
       done(err);
     });
 
     stream.on('data', () => {});
 
-    files.forEach(file => stream.write(file));
+    files.forEach((file) => stream.write(file));
 
     stream.end();
   });
