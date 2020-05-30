@@ -77,9 +77,9 @@ gulp
   .pipe(
     reinstall({
       commands: {
-        'package.json': 'yarn'
+        'package.json': 'yarn',
       },
-      yarn: ['install', '--ignore-scripts', '--force']
+      yarn: ['install', '--ignore-scripts', '--force'],
     })
   ); // yarn install --ignore-scripts --force
 ```
@@ -185,7 +185,7 @@ gulp
   .pipe(
     reinstall(
       {
-        args: ['dev', '--no-shrinkwrap']
+        args: ['dev', '--no-shrinkwrap'],
       } // npm install --dev --no-shrinkwrap
     )
   );
@@ -214,7 +214,7 @@ gulp
       // Or arguments as an object (transformed using Dargs: https://www.npmjs.com/package/dargs)
       bower: { allowRoot: true },
       // Or arguments as an array
-      pip: ['--target', '.']
+      pip: ['--target', '.'],
     })
   );
 ```
@@ -234,9 +234,11 @@ Contributions are very welcome! The rest of this section describes how to set yo
 
 ### Getting started
 
-Just clone the repo locally and start hacking.
+Just clone the repo locally and start hacking. Run `npm test` to see if stuff broke.
 
 ### Release process
+
+(These are mainly notes for the maintainer, if you are contributing you won't need to worry about this)
 
 The release process is driven by [release-it](https://github.com/release-it/release-it). First you create a draft
 GitHub release locally by using `release-it`, then you publish the release through the GitHub web UI.
@@ -244,7 +246,8 @@ GitHub release locally by using `release-it`, then you publish the release throu
 To create a draft release:
 
 1. On your local computer, checkout the `master` branch.
-2. Run `npm run release` with the options you want, then follow the prompts. The two most useful options are `--dry-run`
+2. Update the [changelog](./CHANGELOG.md).
+3. Run `npm run release` with the options you want, then follow the prompts. The two most useful options are `--dry-run`
    and `--preRelease=alpha` (or whatever the pre-release version is). Note that you need to add `--` before any release-it
    arguments.
 
