@@ -1,6 +1,6 @@
 {
   "name": "gulp-reinstall",
-  "version": "0.2.0",
+  "version": "0.3.0-alpha.0",
   "description": "A Gulp plugin to install npm, bower, tsd, and pip packages, based on the configuration files found in the gulp file stream",
   "main": "index.js",
   "scripts": {
