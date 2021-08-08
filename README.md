@@ -24,6 +24,8 @@ composer and pip packages/dependencies.
 - [Credits](#credits)
 - [Contributing](#contributing)
   - [Getting started](#getting-started)
+  - [Changelog](#changelog)
+  - [Commit mesages](#commit-mesages)
   - [Release process](#release-process)
 - [License](#license)
 
@@ -235,6 +237,15 @@ Contributions are very welcome! The rest of this section describes how to set yo
 ### Getting started
 
 Just clone the repo locally and start hacking. Run `npm test` to see if stuff broke.
+
+### Changelog
+
+This project follows the [Keep a Changelog](https://keepachangelog.com/) conventions.
+
+### Commit mesages
+
+Please use the [Angular commit guidelines](https://github.com/angular/angular.js/blob/master/DEVELOPERS.md#commits) when
+writing commit messages.
 
 ### Release process
 
