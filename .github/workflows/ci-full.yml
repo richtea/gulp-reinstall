@@ -18,9 +18,9 @@ jobs:
     strategy:
       matrix:
         node:
+          - 16
           - 14
           - 12
-          - 8
         os:
           - 'windows-latest'
           - 'ubuntu-latest'
