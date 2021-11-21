@@ -7,26 +7,26 @@ composer and pip packages/dependencies.
 
 ![CI build](https://github.com/richtea/gulp-reinstall/workflows/CI%20build/badge.svg)
 [![devDependency Status](https://david-dm.org/richtea/gulp-reinstall/dev-status.svg)](https://david-dm.org/richtea/gulp-reinstall#info=devDependencies)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/richtea/gulp-reinstall/blob/master/LICENSE)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/richtea/gulp-reinstall/blob/main/LICENSE)
 
 <!-- TOC depthfrom:2 updateonsave:false -->
 
 - [Overview](#overview)
 - [Usage](#usage)
 - [Options](#options)
-  - [options.commands](#optionscommands)
-  - [options.production](#optionsproduction)
-  - [options.ignoreScripts](#optionsignorescripts)
-  - [options.noOptional](#optionsnooptional)
-  - [options.allowRoot](#optionsallowroot)
-  - [options.args](#optionsargs)
-  - [options.\<command-name>](#options%5Ccommand-name)
+    - [options.commands](#optionscommands)
+    - [options.production](#optionsproduction)
+    - [options.ignoreScripts](#optionsignorescripts)
+    - [options.noOptional](#optionsnooptional)
+    - [options.allowRoot](#optionsallowroot)
+    - [options.args](#optionsargs)
+    - [options.\<command-name>](#options%5Ccommand-name)
 - [Credits](#credits)
 - [Contributing](#contributing)
-  - [Getting started](#getting-started)
-  - [Changelog](#changelog)
-  - [Commit mesages](#commit-mesages)
-  - [Release process](#release-process)
+    - [Getting started](#getting-started)
+    - [Changelog](#changelog)
+    - [Commit mesages](#commit-mesages)
+    - [Release process](#release-process)
 - [License](#license)
 
 <!-- /TOC -->
@@ -256,7 +256,7 @@ GitHub release locally by using `release-it`, then you publish the release throu
 
 To create a draft release:
 
-1. On your local computer, checkout the `master` branch.
+1. On your local computer, checkout the `main` branch.
 2. Update the [changelog](./CHANGELOG.md).
 3. Run `npm run release` with the options you want, then follow the prompts. The two most useful options are `--dry-run`
    and `--preRelease=alpha` (or whatever the pre-release version is). Note that you need to add `--` before any release-it
